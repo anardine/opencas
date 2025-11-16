@@ -5,6 +5,7 @@
 #ifndef OPENCAS_STM32WB55XX_H
 #define OPENCAS_STM32WB55XX_H
 
+#include <stdint.h>
 
 // Base address definitions for STM32WB55xx
 
@@ -36,5 +37,20 @@
 #define I2C1_BASE_ADDR                    (APB1_BASE_ADDR + 0x5400UL)
 
 
+// Pointer structures
 
-#endif //OPENCAS_STM32WB55XX_H
+typedef struct
+{
+    uint32_t moder;    // GPIO port mode register
+    uint32_t otyper;   // GPIO port output type register
+    uint32_t ospeedr;  // GPIO port output speed register
+    uint32_t pupdr;    // GPIO port pull-up/pull-down register
+    uint32_t idr;      // GPIO port input data register
+    uint32_t odr;      // GPIO port output data register
+    uint32_t bsrr;     // GPIO port bit set/reset register
+    uint32_t lckr;     // GPIO port configuration lock register
+    uint32_t afrl;     // GPIO alternate function low register
+    uint32_t afrh;     // GPIO alternate function high register
+    uint32_t brr;      // GPIO port bit reset register
+
+} GPIOx_TypeDef;        // Structure representing a GPIO peripheral
