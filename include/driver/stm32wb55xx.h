@@ -219,13 +219,13 @@ typedef struct
 
 typedef struct
 {
-    uint16_t cr1;               // Control register 1
-    uint16_t cr2;               // Control register 2
-    uint16_t sr;                // Status register
-    uint16_t dr;                // Data register
-    uint16_t crcpr;             // CRC polynomial register
-    uint16_t rxcrcr;            // RX CRC register
-    uint16_t txcrcr;            // TX CRC register
+    uint32_t cr1;               // Control register 1
+    uint32_t cr2;               // Control register 2
+    uint32_t sr;                // Status register
+    uint32_t dr;                // Data register
+    uint32_t crcpr;             // CRC polynomial register
+    uint32_t rxcrcr;            // RX CRC register
+    uint32_t txcrcr;            // TX CRC register
 
 }SPIx_RegTypeDef;
 
