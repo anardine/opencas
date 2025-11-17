@@ -163,6 +163,25 @@ typedef struct
 #define EXTI                            ((EXTI_RegTypeDef*) EXTI_BASE_ADDR)
 
 
+typedef struct
+{
+    uint32_t cr;
+    uint32_t fcr;
+    uint32_t sr;
+    uint32_t clr;
+    uint64_t ramcom0;
+    uint64_t ramcom1;
+    uint64_t ramcom2;
+    uint64_t ramcom3;
+    uint64_t ramcom4;
+    uint64_t ramcom5;
+    uint64_t ramcom6;
+    uint64_t ramcom7;
+
+}LCD_RegTypeDef;
+
+#define LCD                             ((LCD_RegTypeDef*) LCD_BASE_ADDR)
+
 
 
 #endif
