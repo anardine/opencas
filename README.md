@@ -6,7 +6,7 @@
 > This page contains only the software implementation. For hardware details, BOOM, gerber and assembly files please refer to: https://oshwlab.com/anardine.ef/opencas-new-gen-casio-f-91w
 
 ## What is this?
-The OPENCAS is a board replacement for the Casio F-91W, one of the most used wristwatches in the world.
+The OPENCAS is a replacement board for the Casio F-91W, one of the most used wristwatches in the world.
 
 The board integrates a better, sealed RTC module (where the time drift is substantially smaller), as well as a temperature, pressure, and humidity sensor together with a gyro module with a stepcounter, so you can use to track the steps through the day, week, and months.
 
