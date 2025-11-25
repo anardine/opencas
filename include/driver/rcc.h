@@ -24,6 +24,7 @@ enum RCC_PERIPHERAL
       LCD_PER,
 };
 
+uint8_t initRCC(void);
 
 //enable the clock on the designated peripheral
 void enableRCC(const enum RCC_PERIPHERAL rcc_per);
