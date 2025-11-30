@@ -3,7 +3,7 @@
 //
 
 // import section
-#include "aux/error.h"
+#include "../include/etc/error.h"
 #include "driver/rcc.h"
 #include "driver/gpio.h"
 
