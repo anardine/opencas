@@ -41,31 +41,31 @@ void enableRCC(const enum RCC_PERIPHERAL rcc_per) {
 
     switch (rcc_per) {
         case GPIO_A_PER:
-             GPIOA_CLK_EN();
+             GPIOA_CLK_EN;
             break;
         case GPIO_B_PER:
-            GPIOB_CLK_EN();
+            GPIOB_CLK_EN;
             break;
         case GPIO_C_PER:
-            GPIOC_CLK_EN();
+            GPIOC_CLK_EN;
             break;
         case GPIO_D_PER:
-            GPIOD_CLK_EN();
+            GPIOD_CLK_EN;
             break;
         case GPIO_E_PER:
-            GPIOE_CLK_EN();
+            GPIOE_CLK_EN;
             break;
         case I2C_PER:
-            I2C_CLK_EN();
+            I2C_CLK_EN;
             break;
         case SPI_PER:
-            SPI_CLK_EN();
+            SPI_CLK_EN;
             break;
         case TIM1_PER:
-            TIM1_CLK_EN();
+            TIM1_CLK_EN;
             break;
         case LCD_PER:
-            LCD_CLK_EN();
+            LCD_CLK_EN;
             break;
         default:
             // Handle unknown value
@@ -79,28 +79,28 @@ void diableRCC(const enum RCC_PERIPHERAL rcc_per) {
 
     switch (rcc_per) {
         case GPIO_A_PER:
-            GPIOA_CLK_DIS();
+            GPIOA_CLK_DIS;
             break;
         case GPIO_B_PER:
-            GPIOB_CLK_DIS();
+            GPIOB_CLK_DIS;
             break;
         case GPIO_C_PER:
-            GPIOC_CLK_DIS();
+            GPIOC_CLK_DIS;
             break;
         case GPIO_D_PER:
-            GPIOD_CLK_DIS();
+            GPIOD_CLK_DIS;
             break;
         case GPIO_E_PER:
-            GPIOE_CLK_DIS();
+            GPIOE_CLK_DIS;
             break;
         case I2C_PER:
-            I2C_CLK_DIS();
+            I2C_CLK_DIS;
             break;
         case SPI_PER:
-            SPI_CLK_DIS();
+            SPI_CLK_DIS;
             break;
         case TIM1_PER:
-            TIM1_CLK_DIS();
+            TIM1_CLK_DIS;
             break;
         default:
             // Handle unknown value
