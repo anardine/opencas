@@ -36,7 +36,7 @@ uint8_t initRCC() {
 }
 
 
-void enableRCC(const enum RCC_PERIPHERAL rcc_per) {
+void enableRCC(enum RCC_PERIPHERAL rcc_per) {
     //Enable the clock on the designated peripheral
 
     switch (rcc_per) {
@@ -74,7 +74,7 @@ void enableRCC(const enum RCC_PERIPHERAL rcc_per) {
 
 }
 
-void diableRCC(const enum RCC_PERIPHERAL rcc_per) {
+void diableRCC(enum RCC_PERIPHERAL rcc_per) {
     //Disable the clock on the designated peripheral
 
     switch (rcc_per) {

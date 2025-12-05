@@ -26,10 +26,10 @@ enum RCC_PERIPHERAL
 uint8_t initRCC();
 
 //enable the clock on the designated peripheral
-void enableRCC(const enum RCC_PERIPHERAL rcc_per);
+void enableRCC(enum RCC_PERIPHERAL rcc_per);
 
 //disable the clock on the designated peripheral
-void diableRCC(const enum RCC_PERIPHERAL rcc_per);
+void diableRCC(enum RCC_PERIPHERAL rcc_per);
 
 
 #endif //OPENCAS_RCC_H
