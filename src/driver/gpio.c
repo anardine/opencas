@@ -8,12 +8,12 @@
 uint8_t GPIO_Init(GPIO_Handle_t *pToGPIOHandle) {
 
     // Identify the mode to set up
-    uint32_t pin = pToGPIOHandle->GPIO_PinConfig.GPIO_PinNumber;
-    uint32_t mode = pToGPIOHandle->GPIO_PinConfig.GPIO_PinMode;
-    uint32_t otype = pToGPIOHandle->GPIO_PinConfig.GPIO_PinOPType;
-    uint32_t speed = pToGPIOHandle->GPIO_PinConfig.GPIO_PinSpeed;
-    uint32_t pupd = pToGPIOHandle->GPIO_PinConfig.GPIO_PinPuPdControl;
-    uint32_t af = pToGPIOHandle->GPIO_PinConfig.GPIO_PinAltFunMode;
+    uint8_t pin = pToGPIOHandle->GPIO_PinConfig.GPIO_PinNumber;
+    uint8_t mode = pToGPIOHandle->GPIO_PinConfig.GPIO_PinMode;
+    uint8_t otype = pToGPIOHandle->GPIO_PinConfig.GPIO_PinOPType;
+    uint8_t speed = pToGPIOHandle->GPIO_PinConfig.GPIO_PinSpeed;
+    uint8_t pupd = pToGPIOHandle->GPIO_PinConfig.GPIO_PinPuPdControl;
+    uint8_t af = pToGPIOHandle->GPIO_PinConfig.GPIO_PinAltFunMode;
 
     // Clear previous mode for the pin (2 bits per pin)
     pToGPIOHandle->pGPIOx->moder &= ~(3U << (pin * 2));
@@ -44,4 +44,14 @@ uint8_t GPIO_Init(GPIO_Handle_t *pToGPIOHandle) {
 
     // Success
     return 1;
+}
+
+
+uint8_t GPIO_ReadFromInputPin(GPIO_Handle_t *pToGPIOHandle) {
+    // Read the input data register 'idr', shift right by pinNumber, and mask LSB
+    uint8_t pin = pToGPIOHandle->GPIO_PinConfig.GPIO_PinNumber;
+
+    uint8_t value = (uint8_t)((pToGPIOHandle->pGPIOx->idr >> pin) & 0x1U);
+
+    return value;
 }
