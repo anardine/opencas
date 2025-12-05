@@ -292,8 +292,6 @@ typedef struct
 #define SPI_CLK_DIS     (RCC->apb1enr1 &= ~(1 << 14))
 
 
-
-
 //overall macro definitions of set/unset registers
 
 // clock MSI macros
@@ -305,6 +303,102 @@ typedef struct
 #define SET_MSI_OFF                  (RCC->cr &= ~(1 << 0))
 #define SET_HSI_ON                   (RCC->cr |= (1 << 8))
 #define SET_CLK_TO_HSI               (RCC->cfgr |= (1 << 0))
+
+ //Define GPIO operations
+ #define GPIO_MODE_INPUT            0U
+ #define GPIO_MODE_OUTPUT           1U
+ #define GPIO_MODE_AF               2U
+ #define GPIO_MODE_ANALOG           3U
+
+ #define GPIO_OTYPE_PP              0U
+ #define GPIO_OTYPE_OD              1U
+
+ #define GPIO_OSPEED_LOW            0U
+ #define GPIO_OSPEED_MED            1U
+ #define GPIO_OSPEED_FAST           2U
+ #define GPIO_OSPEED_HIGH           3U
+
+ #define GPIO_PUPD_OFF              0U
+ #define GPIO_PUPD_PU               1U
+ #define GPIO_PUPD_PD               2U
+
+ // Define GPIO Alternate Function Low (AFL) values
+#define GPIO_AFL_AF0                0x0U
+#define GPIO_AFL_AF1                0x1U
+#define GPIO_AFL_AF2                0x2U
+#define GPIO_AFL_AF3                0x3U
+#define GPIO_AFL_AF4                0x4U
+#define GPIO_AFL_AF5                0x5U
+#define GPIO_AFL_AF6                0x6U
+#define GPIO_AFL_AF7                0x7U
+#define GPIO_AFL_AF8                0x8U
+#define GPIO_AFL_AF9                0x9U
+#define GPIO_AFL_AF10               0xAU
+#define GPIO_AFL_AF11               0xBU
+#define GPIO_AFL_AF12               0xCU
+#define GPIO_AFL_AF13               0xDU
+#define GPIO_AFL_AF14               0xEU
+#define GPIO_AFL_AF15               0xFU
+
+// Define GPIO Alternate Function High (AFH) values
+#define GPIO_AFH_AF0                0x0U
+#define GPIO_AFH_AF1                0x1U
+#define GPIO_AFH_AF2                0x2U
+#define GPIO_AFH_AF3                0x3U
+#define GPIO_AFH_AF4                0x4U
+#define GPIO_AFH_AF5                0x5U
+#define GPIO_AFH_AF6                0x6U
+#define GPIO_AFH_AF7                0x7U
+#define GPIO_AFH_AF8                0x8U
+#define GPIO_AFH_AF9                0x9U
+#define GPIO_AFH_AF10               0xAU
+#define GPIO_AFH_AF11               0xBU
+#define GPIO_AFH_AF12               0xCU
+#define GPIO_AFH_AF13               0xDU
+#define GPIO_AFH_AF14               0xEU
+#define GPIO_AFH_AF15               0xFU
+
+
+// Define SPI configuration values
+// SPI Device Modes
+#define SPI_DEVICE_MODE_SLAVE        0U
+#define SPI_DEVICE_MODE_MASTER       1U
+
+// SPI Bus Configurations
+#define SPI_BUS_CONFIG_FULL_DUPLEX   0U  // Full Duplex
+#define SPI_BUS_CONFIG_HALF_DUPLEX   1U  // Half Duplex
+#define SPI_BUS_CONFIG_SIMPLEX_RX    1U  // Simplex RX only.
+
+// SPI Serial Clock Speeds (Baud Rate Prescaler)
+#define SPI_SCLK_SPEED_HALF_CLOCK    0U
+#define SPI_SCLK_SPEED_QUARTER_CLOCK 1U
+#define SPI_SCLK_SPEED_DIV8          2U
+#define SPI_SCLK_SPEED_DIV16         3U
+#define SPI_SCLK_SPEED_DIV32         4U
+#define SPI_SCLK_SPEED_DIV64         5U
+#define SPI_SCLK_SPEED_DIV128        6U
+#define SPI_SCLK_SPEED_DIV256        7U
+
+// SPI Data Frame Format
+#define SPI_DFF_8BITS                0U
+#define SPI_DFF_16BITS               1U
+
+// SPI Clock Polarity
+#define SPI_CPOL_LOW                 0U
+#define SPI_CPOL_HIGH                1U
+
+// SPI Clock Phase
+#define SPI_CPHA_FIRST_EDGE          0U
+#define SPI_CPHA_SECOND_EDGE         1U
+
+// SPI Software Slave Management
+#define SPI_SSM_DISABLE              0U
+#define SPI_SSM_ENABLE               1U
+
+// SPI Enable/Disable
+#define SPI_ENABLE                   1U
+#define SPI_DISABLE                  0U
+
 
 
 #endif
