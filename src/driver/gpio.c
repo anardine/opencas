@@ -55,3 +55,12 @@ uint8_t GPIO_ReadFromInputPin(GPIO_Handle_t *pToGPIOHandle) {
 
     return value;
 }
+
+
+uint32_t GPIO_ReadFromInputPort(GPIOx_RegTypeDef *pGPIOx) {
+    // Read the entire input data register 'idr'
+    uint32_t value = (uint32_t)pGPIOx->idr;
+
+    return value;
+}
+
