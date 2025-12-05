@@ -44,6 +44,7 @@ uint8_t GPIO_Init(GPIO_Handle_t *pToGPIOHandle) {
 
     // Success
     return 1;
+
 }
 
 
