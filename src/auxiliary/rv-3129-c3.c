@@ -15,6 +15,7 @@ uint8_t readFromRTC(I2C_Handle_t *pToI2CHandle, uint8_t memAddr, uint8_t *data, 
       I2C_Receive(pToI2CHandle, data, length, rtcAddress);
 
 
+
       return 0;
 }
 
