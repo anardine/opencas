@@ -98,13 +98,16 @@ void I2C_DeInit(I2Cx_Reg_TypeDef *pI2Cx) {
 }
 
 
-uint8_t I2C_Transmit(I2C_Handle_t *pToI2CHandle, uint8_t *data, uint8_t length, uint8_t address) {
+uint8_t I2C_Transmit(I2C_Handle_t *pToI2CHandle, uint8_t *data, uint8_t memAddr, uint8_t length, uint8_t deviceAddress) {
+
+    // sums one to length as we're sending the page/word address too
+    length += 1;
     
     //put device in controller mode and configure sending bits
     uint32_t volatile cr2 = 0;
 
     // add the address to CR2
-    cr2 |= ((uint32_t)address << 1);
+    cr2 |= ((uint32_t)deviceAddress << 1);
 
     //enable transfer direction to be TX
     cr2 &= ~(1 << 10);
@@ -113,10 +116,10 @@ uint8_t I2C_Transmit(I2C_Handle_t *pToI2CHandle, uint8_t *data, uint8_t length, 
     cr2 &= ~(1 << 11);
 
     //define the number of bytes to be sent
-    cr2 |= ((uint32_t)length << 16);
+    cr2 |= (((uint32_t)length) << 16);
 
-    //define that a stop condition should be sent when the bytes are transmitted
-    cr2 |= (1 << 25);
+    //define that a stop condition should be sent when the bytes are transmitted. The RV-3129-C3 does not allow a repeated START. Therefore a STOP has to be released before the next START.
+    cr2 |= (1 << 25); // 1: Automatic end mode: a STOP condition is automatically sent when NBYTES data are transferred.
 
     //send start bit. To launch the communication, set the START bit of the I2C_CR2 register. The controller then automatically sends a START condition followed by the target address, either immediately if the BUSY flag is low, or tBUF time after the BUSY flag transits from high to lowstate. The BUSY flag is set upon sending the START condition.
     cr2 |= (1 << 13);
@@ -124,7 +127,18 @@ uint8_t I2C_Transmit(I2C_Handle_t *pToI2CHandle, uint8_t *data, uint8_t length, 
     //set cr2
     pToI2CHandle->pI2Cx->cr2 = cr2;
 
+
     //send data
+    while (!(pToI2CHandle->pI2Cx->isr & (1 << 1))){}
+    // Wait until TXIS (Transmit interrupt status) flag is set or NACK received
+    // TXIS is bit 1 in ISR
+
+    // Write page/word address to TXDR
+    pToI2CHandle->pI2Cx->txdr = memAddr;
+
+    length-=1; //remove one from length to adequate for NBYTES
+
+    //Write NBYTES
     for (int i = 0; i < length; i++) {
         // Wait until TXIS (Transmit interrupt status) flag is set or NACK received
         // TXIS is bit 1 in ISR
@@ -149,13 +163,13 @@ uint8_t I2C_Transmit(I2C_Handle_t *pToI2CHandle, uint8_t *data, uint8_t length, 
 }
 
 
-uint8_t I2C_Receive(I2C_Handle_t *pToI2CHandle, uint8_t *data, uint8_t length, uint8_t address) {
+uint8_t I2C_Receive(I2C_Handle_t *pToI2CHandle, uint8_t *data, uint8_t length, uint8_t deviceAddress) {
 
     // 1. Configure CR2 for receive
     uint32_t volatile cr2 = 0;
 
     // Set target address (7-bit)
-    cr2 |= ((uint32_t)address << 1);
+    cr2 |= ((uint32_t)deviceAddress << 1);
 
     // Set transfer direction to Read (RD_WRN = 1)
     cr2 |= (1 << 10);
@@ -163,8 +177,8 @@ uint8_t I2C_Receive(I2C_Handle_t *pToI2CHandle, uint8_t *data, uint8_t length, u
     // Set number of bytes to read
     cr2 |= ((uint32_t)length << 16);
 
-    // Auto-stop generation: hardware sends STOP after NBYTES
-    cr2 |= (1 << 25);
+    // Auto-stop generation: hardware sends STOP after NBYTES. The RV-3129-C3 does not allow a repeated START. Therefore a STOP has to be released before the next START.
+    cr2 |= (1 << 25); // 1: Automatic end mode: a STOP condition is automatically sent when NBYTES data are transferred.
 
     // Start condition
     cr2 |= (1 << 13);
@@ -198,5 +212,4 @@ uint8_t I2C_Receive(I2C_Handle_t *pToI2CHandle, uint8_t *data, uint8_t length, u
 
     return 0;
 }
-
 
