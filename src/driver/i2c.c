@@ -139,13 +139,15 @@ uint8_t I2C_Transmit(I2C_Handle_t *pToI2CHandle, uint8_t *data, uint8_t memAddr,
     length-=1; //remove one from length to adequate for NBYTES
 
     //Write NBYTES
-    for (int i = 0; i < length; i++) {
-        // Wait until TXIS (Transmit interrupt status) flag is set or NACK received
-        // TXIS is bit 1 in ISR
-        while (!(pToI2CHandle->pI2Cx->isr & (1 << 1))){}
+    if (length) {
+        for (int i = 0; i < length; i++) {
+            // Wait until TXIS (Transmit interrupt status) flag is set or NACK received
+            // TXIS is bit 1 in ISR
+            while (!(pToI2CHandle->pI2Cx->isr & (1 << 1))){}
 
-        // Write data to TXDR
-        pToI2CHandle->pI2Cx->txdr = data[i];
+            // Write data to TXDR
+            pToI2CHandle->pI2Cx->txdr = data[i];
+        }
     }
 
     // 4. Wait for the STOP condition to be detected
