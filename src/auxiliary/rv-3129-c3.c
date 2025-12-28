@@ -8,9 +8,8 @@
 uint8_t readFromRTC(I2C_Handle_t *pToI2CHandle, uint8_t memAddr, uint8_t *data, uint8_t length) {
 
       //Any serial communication with the RV-3129-C3 starts with a “START condition” and terminates with the “STOP condition” No restart allowed on comms with the RV-3129. The RV-3129-C3 does not allow a repeated START. Therefore a STOP has to be released before the next START
-
-      I2C_Transmit(pToI2CHandle, data, memAddr, 0, RTC_ADDR);
-      I2C_Receive(pToI2CHandle, data, length, RTC_ADDR);
+      I2C_Transmit(pToI2CHandle, data, memAddr, 0, RTC_ADDR); // transmits the memAddr first,
+      I2C_Receive(pToI2CHandle, data, length, RTC_ADDR); // read the details from the memAddr sent beforehand
 
       return 0;
 }
@@ -69,7 +68,7 @@ uint8_t alarmInit(I2C_Handle_t *pToI2CHandle) {
       writeToRTC(pToI2CHandle,0x01, &flag,1); //write to Control_INT 1 to AIE bit
       readFromRTC(pToI2CHandle,0x01, &alarmSet,1); //read alarm value to check if alarm is enabled
 
-      return alarmSet; //return true if alarm is set init
+      return alarmSet; //return true if alarm is initialized
 }
 
 uint8_t alarmClear(I2C_Handle_t *pToI2CHandle) {
@@ -82,9 +81,23 @@ uint8_t alarmClear(I2C_Handle_t *pToI2CHandle) {
       return 0;
 }
 
-uint8_t alarmSet(I2C_Handle_t *pToI2CHandle) {
+uint8_t alarmSet(I2C_Handle_t *pToI2CHandle, uint8_t *pToAlarmSettings) {
 
-      return 0;
+      uint8_t seconds = (pToAlarmSettings[0] | (1 << 7)); // 1 << 7 enables each of the alarm's section
+      uint8_t minutes = (pToAlarmSettings[1] | (1 << 7));
+      uint8_t hour = (pToAlarmSettings[3] | (1 << 7));
+
+      //The RV-3129-c3 have alarm setting for s, m, h, dd, mm, and yyyy. For this implementation, only s, m and h are set
+      //TODO: Implement the settings for day, month and year too.
+      writeToRTC(pToI2CHandle,0x10, &seconds,1); //seconds
+      writeToRTC(pToI2CHandle,0x11, &minutes,1); //minutes
+      writeToRTC(pToI2CHandle,0x12, &hour,1); //hour
+
+      if (alarmInit(pToI2CHandle)) {
+            return 0; // return true if the alarm was correctly set
+      }
+
+      return 1;
 }
 
 void displayTime(I2C_Handle_t *pToI2CHandle, uint8_t *timePointer) {
