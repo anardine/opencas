@@ -20,7 +20,7 @@ typedef struct
 }I2C_PinConfig_t;
 
 
-typedef struct stm32f411xx_i2c
+typedef struct
 {
       I2Cx_Reg_TypeDef *pI2Cx;
       I2C_PinConfig_t I2C_PinConfig;
