@@ -26,6 +26,9 @@ uint8_t setDateC(I2C_Handle_t *pToI2CHandle, uint8_t *datePointer);
 uint8_t alarmInit(I2C_Handle_t *pToI2CHandle);
 uint8_t alarmClear(I2C_Handle_t *pToI2CHandle);
 uint8_t alarmSet(I2C_Handle_t *pToI2CHandle, uint8_t *pToAlarmSettings);
+uint8_t timerInit(I2C_Handle_t *pToI2CHandle);
+uint8_t timerClear(I2C_Handle_t *pToI2CHandle);
+uint8_t timerSet(I2C_Handle_t *pToI2CHandle, uint8_t *pToTimerSettings);
 void displayTime(I2C_Handle_t *pToI2CHandle, uint8_t *timePointer);
 
 #endif //OPENCASIO_RV_3129_C3_H

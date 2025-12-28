@@ -99,6 +99,19 @@ uint8_t alarmSet(I2C_Handle_t *pToI2CHandle, uint8_t *pToAlarmSettings) {
 
       return 1;
 }
+// TODO implement timer functions
+uint8_t timerInit(I2C_Handle_t *pToI2CHandle) {
+      return 0;
+}
+
+uint8_t timerClear(I2C_Handle_t *pToI2CHandle) {
+      return 0;
+}
+
+uint8_t timerSet(I2C_Handle_t *pToI2CHandle, uint8_t *pToTimerSettings) {
+      return 0;
+}
+
 
 void displayTime(I2C_Handle_t *pToI2CHandle, uint8_t *timePointer) {
 
