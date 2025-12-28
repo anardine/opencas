@@ -10,7 +10,7 @@
 #include "driver/i2c.h"
 
 
-//define Macros for settting and clearing bit
+//define Macros for setting and clearing bit
 #define ENABLE          0x01U
 #define DISABLE         0x00U
 
@@ -19,6 +19,13 @@ uint8_t static const RTC_ADDR =  0xAC;
 
 uint8_t readFromRTC(I2C_Handle_t *pToI2CHandle, uint8_t memAddr, uint8_t *data, uint8_t length);
 uint8_t writeToRTC(I2C_Handle_t *pToI2CHandle, uint8_t memAddr, uint8_t *data, uint8_t length);
-
+uint8_t getTime(I2C_Handle_t *pToI2CHandle, uint8_t *timePointer);
+uint8_t setTime(I2C_Handle_t *pToI2CHandle, uint8_t *timePointer);
+uint8_t getDate(I2C_Handle_t *pToI2CHandle, uint8_t *datePointer);
+uint8_t setDateC(I2C_Handle_t *pToI2CHandle, uint8_t *datePointer);
+uint8_t alarmInit(I2C_Handle_t *pToI2CHandle);
+uint8_t alarmClear(I2C_Handle_t *pToI2CHandle);
+uint8_t alarmSet(I2C_Handle_t *pToI2CHandle, uint8_t *pToAlarmSettings);
+void displayTime(I2C_Handle_t *pToI2CHandle, uint8_t *timePointer);
 
 #endif //OPENCASIO_RV_3129_C3_H

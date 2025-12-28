@@ -22,7 +22,7 @@ uint8_t writeToRTC(I2C_Handle_t *pToI2CHandle, uint8_t memAddr, uint8_t *data, u
       return 0;
 }
 
-uint8_t getTimeFromRTC(I2C_Handle_t *pToI2CHandle, uint8_t *timePointer) {
+uint8_t getTime(I2C_Handle_t *pToI2CHandle, uint8_t *timePointer) {
 
       readFromRTC(pToI2CHandle,0x08, timePointer,1); //seconds
       readFromRTC(pToI2CHandle,0x09, (timePointer+1),1); //minutes
@@ -31,7 +31,7 @@ uint8_t getTimeFromRTC(I2C_Handle_t *pToI2CHandle, uint8_t *timePointer) {
       return 0;
 }
 
-uint8_t setTimeFromRTC(I2C_Handle_t *pToI2CHandle, uint8_t *timePointer) {
+uint8_t setTime(I2C_Handle_t *pToI2CHandle, uint8_t *timePointer) {
 
       writeToRTC(pToI2CHandle,0x08, timePointer,1); //seconds
       writeToRTC(pToI2CHandle,0x09, (timePointer+1),1); //minutes
@@ -40,7 +40,7 @@ uint8_t setTimeFromRTC(I2C_Handle_t *pToI2CHandle, uint8_t *timePointer) {
       return 0;
 }
 
-uint8_t getDateFromRTC(I2C_Handle_t *pToI2CHandle, uint8_t *datePointer) {
+uint8_t getDate(I2C_Handle_t *pToI2CHandle, uint8_t *datePointer) {
 
       readFromRTC(pToI2CHandle,0x0B, datePointer,1); //days
       readFromRTC(pToI2CHandle,0x0C, (datePointer+1),1); //weekday
@@ -50,7 +50,7 @@ uint8_t getDateFromRTC(I2C_Handle_t *pToI2CHandle, uint8_t *datePointer) {
       return 0;
 }
 
-uint8_t setDateFromRTC(I2C_Handle_t *pToI2CHandle, uint8_t *datePointer) {
+uint8_t setDateC(I2C_Handle_t *pToI2CHandle, uint8_t *datePointer) {
 
       writeToRTC(pToI2CHandle,0x0B, datePointer,1); //days
       writeToRTC(pToI2CHandle,0x0C, (datePointer+1),1); //weekday
@@ -94,7 +94,7 @@ uint8_t alarmSet(I2C_Handle_t *pToI2CHandle, uint8_t *pToAlarmSettings) {
       writeToRTC(pToI2CHandle,0x12, &hour,1); //hour
 
       if (alarmInit(pToI2CHandle)) {
-            return 0; // return true if the alarm was correctly set
+            return 0; // return 0 if the alarm was correctly set
       }
 
       return 1;
@@ -102,7 +102,7 @@ uint8_t alarmSet(I2C_Handle_t *pToI2CHandle, uint8_t *pToAlarmSettings) {
 
 void displayTime(I2C_Handle_t *pToI2CHandle, uint8_t *timePointer) {
 
-      getTimeFromRTC(pToI2CHandle, timePointer);
+      getTime(pToI2CHandle, timePointer);
 
       uint8_t seconds = timePointer[0];
       uint8_t minutes = timePointer[1];
