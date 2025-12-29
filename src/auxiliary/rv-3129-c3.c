@@ -68,7 +68,10 @@ uint8_t alarmInit(I2C_Handle_t *pToI2CHandle) {
       writeToRTC(pToI2CHandle,0x01, &flag,1); //write to Control_INT 1 to AIE bit
       readFromRTC(pToI2CHandle,0x01, &alarmSet,1); //read alarm value to check if alarm is enabled
 
-      return alarmSet; //return true if alarm is initialized
+      if ((alarmSet >> 0) & 0x01) {
+            return 0; //return false if alarm is initialized
+      }
+      return 1;
 }
 
 uint8_t alarmClear(I2C_Handle_t *pToI2CHandle) {
@@ -93,15 +96,27 @@ uint8_t alarmSet(I2C_Handle_t *pToI2CHandle, uint8_t *pToAlarmSettings) {
       writeToRTC(pToI2CHandle,0x11, &minutes,1); //minutes
       writeToRTC(pToI2CHandle,0x12, &hour,1); //hour
 
-      if (alarmInit(pToI2CHandle)) {
+      if (!(alarmInit(pToI2CHandle))) {
             return 0; // return 0 if the alarm was correctly set
       }
-
       return 1;
 }
 // TODO implement timer functions
 uint8_t timerInit(I2C_Handle_t *pToI2CHandle) {
-      return 0;
+
+      uint8_t controlEn = (0x4 << 5) | (0x1 << 2) | (0x1 << 1); // Timer Source Clock Frequency: 1 Hz | Enables Countdown Timer Auto-Reload mode | Enables Countdown Timer
+      uint8_t interruptEn = (0x1 << 1);
+
+      writeToRTC(pToI2CHandle,0x00, &controlEn,1); //Enable the Timer source clock to a frequency of 1Hz (second to be the lowest unit possible for now)
+      writeToRTC(pToI2CHandle,0x01, &interruptEn,1); //Enable the Timer interrupt register for triggering an interrupt when the timer reaches 0
+
+      uint8_t timerSet;
+      readFromRTC(pToI2CHandle,0x01, &timerSet,1); //read alarm value to check if alarm is enabled
+
+      if ((timerSet >> 1) & 0x01) {
+            return 0; //return false if Timer is initialized
+      }
+      return 1;
 }
 
 uint8_t timerClear(I2C_Handle_t *pToI2CHandle) {
